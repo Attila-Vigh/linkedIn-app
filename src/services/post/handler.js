@@ -15,7 +15,6 @@ export const addPost = async(req, res, next) => {
 
 export const getAllPosts = async(req, res, next) => {
     try {
-
         const Posts = await Post.find({})
         res.send(Posts)
 
@@ -38,11 +37,11 @@ export const getAllPosts = async(req, res, next) => {
 export const findById = async(req, res, next) => {
     console.log("req.params.id::: ", req.params.id);
     try {
-        const Post = await Post.findById(req.params.id);
-        if (!Post) {
+        const Posts = await Post.findById(req.params.id);
+        if (!Posts) {
             next(createError(404, `Post with id "${ req.params.id }" not found`));
         }
-        res.send(Post);
+        res.send(Posts);
     } catch (error) {
         next(createError(500, error.message));
     }
