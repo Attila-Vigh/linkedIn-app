@@ -1,26 +1,25 @@
 import createError from "http-errors";
 import Post from "../../Models/postSchema.js";
 
-export const addPost = async ( req, res, next ) => {
-    console.log( "req.params.id::: ", req.body );
+export const addPost = async(req, res, next) => {
+    console.log("req.params.id::: ", req.body);
     try {
-        const newPost = await new Post( req.body ).save();
-        res.status( 201 ).send( newPost );
-    }
-    catch ( error ) {
-        next( createError( 500, error.message ) );
+        //const userId = req.body.userId
+        const newUser = new Post(req.body)
+        const { _id } = await newUser.save()
+        res.send({ newUser, _id })
+    } catch (error) {
+        console.log(error)
     }
 };
 
-export const getAllPosts = async ( req, res, next ) => {
-     try {
+export const getAllPosts = async(req, res, next) => {
+    try {
+        const Posts = await Post.find({})
+        res.send(Posts)
 
-    const Posts = await Post.find({})
-    res.send(Posts)
-    
-    }
-    catch ( error ) {
-        next( createError( 404, error.message ) );
+    } catch (error) {
+        next(createError(404, error.message));
     }
 };
 
@@ -35,37 +34,35 @@ export const getAllPosts = async ( req, res, next ) => {
 //     }
 // };
 
-export const findById = async (req, res, next) => {
+export const findById = async(req, res, next) => {
     console.log("req.params.id::: ", req.params.id);
     try {
-        const Post = await Post.findById(req.params.id);
-        if(!Post) {
-            next(createError(404, `Post with id "${ req.params.id }" not found`));}
-        res.send(Post);
-    }
-    catch (error) {
+        const Posts = await Post.findById(req.params.id);
+        if (!Posts) {
+            next(createError(404, `Post with id "${ req.params.id }" not found`));
+        }
+        res.send(Posts);
+    } catch (error) {
         next(createError(500, error.message));
     }
 };
 
 
-export const updatePost = async (req, res, next) => {
+export const updatePost = async(req, res, next) => {
     try {
-        const updatedPost = await Post.findByIdAndUpdate( req.params.id, req.body, { new: true } );
+        const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.status(204).send(updatedPost);
-    }
-    catch (error) {
+    } catch (error) {
         next(createError(500, error.message));
     }
 };
 
 
-export const deletePost = async (req, res, next) => {
+export const deletePost = async(req, res, next) => {
     try {
-        await Post.findByIdAndDelete( req.params.id);
+        await Post.findByIdAndDelete(req.params.id);
         res.status(204).send();
-    }
-    catch (error) {
+    } catch (error) {
         next(createError(500, error.message));
     }
 };
