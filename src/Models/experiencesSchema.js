@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
 
-const experienceSchema = new Schema(
+const experiencesSchema = new Schema(
     {
         username   : { type: String, required: true},   //"admin",
         role       : { type: String, required: true},   //"CTO",
@@ -18,4 +18,4 @@ const experienceSchema = new Schema(
     }
 );
 
-export default model('Experience', experienceSchema);
+export default model('Experiences', experiencesSchema);

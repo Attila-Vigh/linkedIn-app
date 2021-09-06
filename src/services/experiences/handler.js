@@ -1,5 +1,5 @@
 import createError from "http-errors";
-import Experience from "../../Models/experienceSchema.js";
+import Experience from "../../Models/experiencesSchema.js";
 
 export const addExperience = async ( req, res, next ) => {
     console.log( "req.params.id::: ", req.body );
@@ -70,7 +70,7 @@ export const deleteExperience = async ( req, res, next ) => {
     }
 };
 
-const experienceHandler = {
+const experiencesHandler = {
     getAll: getAllExperience,
     add: addExperience,
     findById: findById,
@@ -78,4 +78,4 @@ const experienceHandler = {
     delete: deleteExperience
 };
 
-export default experienceHandler;
+export default experiencesHandler;
