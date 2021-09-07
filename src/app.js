@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import services from './services/index.js';
+import { publicFolderPath } from './lib/fs-tools.js'
 // import { errorHandler } from './middleWares/errorHandlers.js';
 
 const app = express();
@@ -22,6 +23,8 @@ const corsOptions = {
 app.use(cors());
 
 app.use(express.json());
+
+app.use(express.static(publicFolderPath))
 
 app.use('/', services);
 

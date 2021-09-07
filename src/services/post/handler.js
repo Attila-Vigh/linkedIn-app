@@ -15,7 +15,7 @@ export const addPost = async(req, res, next) => {
 
 export const getAllPosts = async(req, res, next) => {
     try {
-        const Posts = await Post.find({})
+        const Posts = await Post.find({}).populate('profile')
         res.send(Posts)
 
     } catch (error) {
@@ -37,7 +37,7 @@ export const getAllPosts = async(req, res, next) => {
 export const findById = async(req, res, next) => {
     console.log("req.params.id::: ", req.params.id);
     try {
-        const Posts = await Post.findById(req.params.id);
+        const Posts = await Post.findById(req.params.id).populate('profile');
         if (!Posts) {
             next(createError(404, `Post with id "${ req.params.id }" not found`));
         }
