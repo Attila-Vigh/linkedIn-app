@@ -38,6 +38,7 @@ export const addProduct = async ( req, res, next ) => {
     try
     {
         const newProduct = await new Products( req.body ).save();
+        addedImage = { ...newProduct, image: req.file.path };
 
         res.status( 201 ).send( newProduct );
     }
