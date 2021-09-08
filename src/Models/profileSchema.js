@@ -1,26 +1,57 @@
-import mongoose from 'mongoose';
-const { Schema, model } = mongoose;
+import mongoose from 'mongoose'
 
+const { Schema, model } = mongoose
 
-
-const productSchema = new Schema(
+const ProfileSchema = new Schema (
     {
-        // "_id": "5d84937322b7b54d848eb41b", //server generated
-        // "name": "Diego",
-        // "surname": "Banovaz",
-        // "email": "diego@strive.school",
-        // "bio": "SW ENG",
-        // "title": "COO @ Strive School",
-        // "area": "Berlin",
-        // "image": ..., //server generated on upload, set a default here
-        // "username": "admin",
-        // "createdAt": "2019-09-20T08:53:07.094Z", //server generated
-        // "updatedAt": "2019-09-20T09:00:46.977Z", //server generated
+        name: {
+            type: String,
+            required: true
+        },
+        surname: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            required: true
+        },
+        bio: {
+            type: String,
+            required: true
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        area: {
+            type: String,
+            required: true
+        },
+        image: {
+            type: String,
+            required: true,
+            default:'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
+        },
+        username: {
+            type: String,
+            required: true,
+        },
     },
     {
         timestamps: true,
     }
-);
+)
 
-export default model( 'Products', productSchema );
+ProfileSchema.static('findProfiles', async function (query) {
+    const total = await this.countDocuments(query.criteria)
+    const profiles = await this.find(query.criteria, query.options.fields)
+        .skip(query.options.skip)
+        .limit(query.options.limit)
+        .sort(query.options.sort)
+
+    return { total, profiles }
+})
+
+export default model('Profile', ProfileSchema)
 
