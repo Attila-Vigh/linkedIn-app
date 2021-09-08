@@ -5,6 +5,7 @@ export const addExperience = async ( req, res, next ) => {
     console.log( "req.params.id::: ", req.body );
     try
     {
+        req.body.image = req.file.path;
         const newExperience = await new Experience( req.body ).save();
         res.status( 201 ).send( newExperience );
     }
