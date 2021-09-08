@@ -1,11 +1,15 @@
 import { Router } from "express";
 import postHandler from "./handler.js";
+import uploadPostImage from "../utils/uploadFiles.js";
 
 const router = Router();
 
 router.route( "/" )
     .get( postHandler.getAll )
-    .post( postHandler.add );
+    .post(
+        uploadPostImage("linkedjobs/posts-images").single( "image" ),
+        postHandler.add 
+    );
 
 router.route( '/:id' )
     .get( postHandler.findById )

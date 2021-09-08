@@ -25,7 +25,7 @@ const postSchema = new Schema({
     // }
     //     "createdAt": "2019-10-01T19:44:04.496Z", //server generated
     // "updatedAt": "2019-10-01T19:44:04.496Z", //server generated
-    // "image": ...; //server generate
+    image: { type: String, required: true },   //... //server generated on upload, set a default here
 }, {
     timestamps: true,
 });
