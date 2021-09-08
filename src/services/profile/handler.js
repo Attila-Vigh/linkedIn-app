@@ -2,7 +2,7 @@ import express from "express";
 import createError from "http-errors";
 import q2m from "query-to-mongo";
 import ProfileModel from "../../Models/profileSchema.js";
-import ExperienceModel from "../../Models/experienceSchema.js";
+import ExperienceModel from "../../Models/experiencesSchema.js";
 import { generatePDFReadableStream } from '../lib/pdf/index.js'
 import { pipeline } from 'stream'
 
