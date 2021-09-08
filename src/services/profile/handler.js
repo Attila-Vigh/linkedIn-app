@@ -133,4 +133,4 @@ const productHandler = {
     getCV: profileCV
 };
 
-export default productHandler;
+export default profileHandler;
