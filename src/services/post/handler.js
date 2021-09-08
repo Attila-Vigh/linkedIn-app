@@ -5,7 +5,7 @@ export const addPost = async(req, res, next) => {
     console.log("req.params.id::: ", req.body);
     try {
         //const userId = req.body.userId
-        req.body.image = req.file.path;
+        //req.body.image = req.file.path;
         const newUser = new Post(req.body)
         const { _id } = await newUser.save()
         res.send({ newUser, _id })

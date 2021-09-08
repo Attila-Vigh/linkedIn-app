@@ -52,4 +52,4 @@ ProfileSchema.static('findProfiles', async function(query) {
 
 export default model('Profile', ProfileSchema)
 
-export default model('Profile', profileSchema);
+//export default model('Profile', profileSchema);

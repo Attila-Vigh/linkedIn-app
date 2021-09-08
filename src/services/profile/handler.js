@@ -8,11 +8,11 @@ import { pipeline } from 'stream'
 
 export const listProfiles = async(req, res, next) => {
     try {
-        const query = q2m(req.query)
+        //const query = q2m(req.query)
 
-        const { total, profiles } = await ProfileModel.findProfiles(query)
+        const profiles = await ProfileModel.find({})
 
-        res.send({ links: query.links('/profile', total), total, profiles })
+        res.send(profiles)
     } catch (error) {
         next(createError(500, "An Error ocurred while getting the list of profiles"))
     }
@@ -123,7 +123,7 @@ export const profileCV = async(req, res, next) => {
 //     }
 // };
 
-const productHandler = {
+const profileHandler = {
     add: addProfile,
     list: listProfiles,
     single: singleProfile,
