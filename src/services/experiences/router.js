@@ -7,7 +7,7 @@ const router = Router();
 
 
 
-router.route( "/" )
+router.route( "/:userName/experiences" )
     .get( experiencesHandler.getAll )
     .post(
 
@@ -16,11 +16,13 @@ router.route( "/" )
         experiencesHandler.add
     );
 
-router.route( '/:id' )
+router.route( '/:userName/experiences/:expId' )
     .get( experiencesHandler.findById )
     .put( experiencesHandler.update )
     .delete( experiencesHandler.delete );
 
+router.route( '/:userName/experiences/:expId/picture' )
+router.route( '/:userName/experiences/CSV' )
 
 // router.route( "/image" )
 //     .post(
@@ -33,4 +35,3 @@ router.route( '/:id' )
 //     );
 
 export default router;
-
