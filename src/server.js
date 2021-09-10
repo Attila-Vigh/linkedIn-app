@@ -11,7 +11,7 @@ console.table(listEndpoints(server));
 mongoose.connect(MONGO_CONNECTION_CLOUD);
 
 mongoose.connection.on('connected', () => {
-    console.info(`✅ Connected to MongoDB at ${ MONGO_CONNECTION_CLOUD } 🤞🤞🚀🚀🚀`);
+    console.info(`✅ Connected to MongoDB at ${ MONGO_CONNECTION_iCLOUD } 🤞🤞🚀🚀🚀`);
     server.listen(PORT, () => console.log(`✅ Server listening on port 🥳 ${ PORT } 🥳 🥳🥳🥳🥳🥳 :`));
     server.on('error', (err) => console.log(`❌ Server error: ${ err } 🥵🥵🥵🥵🥵🥵🥵  `));
 

@@ -1,8 +1,8 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const { Schema, model } = mongoose
+const { Schema, model } = mongoose;
 
-const ProfileSchema = new Schema({
+const ProfileSchema = new Schema( {
     name: {
         type: String,
         required: true
@@ -36,20 +36,20 @@ const ProfileSchema = new Schema({
         type: String,
         required: true,
     },
-}, {
-    timestamps: true,
-})
+    experiences: { type: Schema.Types.ObjectId, ref: "Experiences", },
+},
+    {
+        timestamps: true,
+    } );
 
-ProfileSchema.static('findProfiles', async function(query) {
-    const total = await this.countDocuments(query.criteria)
-    const profiles = await this.find(query.criteria, query.options.fields)
-        .skip(query.options.skip)
-        .limit(query.options.limit)
-        .sort(query.options.sort)
+ProfileSchema.static( 'findProfiles', async function ( query ) {
+    const total = await this.countDocuments( query.criteria );
+    const profiles = await this.find( query.criteria, query.options.fields )
+        .skip ( query.options.skip )
+        .limit( query.options.limit )
+        .sort ( query.options.sort );
 
-    return { total, profiles }
-})
+    return { total, profiles };
+} );
 
-export default model('Profile', ProfileSchema)
-
-//export default model('Profile', profileSchema);
+export default model( 'Profile', ProfileSchema );
