@@ -35,8 +35,9 @@ export const getAllComments = async(req, res, next) => {
     try {
         const postId = req.params.postId
         const post = await Post.findById(postId)
+        console.log(post.comments);
         if (postId) {
-            const comments = await Comments.findById(post.comments)
+            const comments = await Comments.find(post.comments._id)
             console.log(comments)
             res.status(200).send(comments)
         } else {
@@ -89,10 +90,27 @@ export const updateComment = async(req, res, next) => {
 
 export const deleteComment = async(req, res, next) => {
     try {
-        await Post.findByIdAndDelete(req.params.id);
-        res.status(204).send();
+        const postId = req.params.postId
+        const commentId = req.params.commentId
+        const post = await Post.findById(postId)
+        const comment = await Comments.findById(commentId)
+        if (comment) {
+            console.log(post)
+            await Post.findByIdAndUpdate(postId, { '$pull': { "comments": comment } })
+            await Comments.findByIdAndDelete(commentId)
+            res.status(204).send(`deleted`)
+        } else {
+            next(createError(404, `sorry your request cannot be found`))
+            
+        }
     } catch (error) {
-        next(createError(500, error.message));
+        console.log(error)
+        if (error.name === "validationError") {
+            next(createError(400, error))
+        } else {
+            console.log(error)
+            next(createError(500, "An Error ocurred while creating your comment"))
+        }
     }
 };
 
