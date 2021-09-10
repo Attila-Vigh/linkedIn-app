@@ -5,7 +5,7 @@ export const addPost = async(req, res, next) => {
     console.log("req.params.id::: ", req.body);
     try {
         //const userId = req.body.userId
-        //req.body.image = req.file.path;
+        // req.body.image = req.file.path;
         const newUser = new Post(req.body)
         const { _id } = await newUser.save()
         res.send({ newUser, _id })
@@ -23,17 +23,6 @@ export const getAllPosts = async(req, res, next) => {
         next(createError(404, error.message));
     }
 };
-
-// export const searchBlogByTitle = async ({req, res, next}) => {
-//     console.log("req.query ", req.query);
-//     try {
-//         const blogTitle = await Blogs.find(req.query.title);
-//         res.send(blogTitle);
-//     }
-//     catch (error) {
-//         next(createError(500, error.message));
-//     }
-// };
 
 export const findById = async(req, res, next) => {
     console.log("req.params.id::: ", req.params.id);

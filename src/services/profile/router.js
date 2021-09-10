@@ -1,6 +1,7 @@
 import { Router } from "express";
 import profileHandler from "./handler.js";
-import upload from '../../lib/fs-tools.js'
+
+import uploadImage from "../utils/uploadFiles.js";
 
 
 const router = Router();
@@ -8,7 +9,10 @@ const router = Router();
 
 router.route('/')
     .get(profileHandler.list)
-    .post(profileHandler.add)
+    .post(
+        uploadImage( "linkedjobs/profile-images" ).single( "image" ),
+        profileHandler.add
+    )
 
 router.route('/:profileId')
     .get(profileHandler.single)
