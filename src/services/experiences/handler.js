@@ -26,7 +26,8 @@ export const getAllExperienceByName = async ( req, res, next ) => {
 
         let experiences = [];
 
-        for ( let i = 0; i < experiencesID.length; i++ ) {
+        for ( let i = 0; i < experiencesID.length; i++ )
+        {
             const experience = await Experience.findById( experiencesID[ i ] );
             experiences.push( experience );
         }
@@ -102,6 +103,7 @@ export const uploadPicture = async ( req, res, next ) => {
     try
     {
         console.log( "req.params: ", req.params );
+        console.log( "req.file: ", req.file );
         console.log( "req.body: ", req.body );
         req.body.image = req.file.path;
         const updatedExperience = await Experience.findByIdAndUpdate( req.params.expId, req.body, { new: true, returning: true } );
