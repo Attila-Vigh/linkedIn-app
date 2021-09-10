@@ -90,19 +90,16 @@ export const updateComment = async(req, res, next) => {
 
 export const deleteComment = async(req, res, next) => {
     try {
-        const postId = req.params.postId
+        
         const commentId = req.params.commentId
-        const post = await Post.findById(postId)
+        
         const comment = await Comments.findById(commentId)
-        if (comment) {
-            console.log(post)
-            await Post.findByIdAndUpdate(postId, { '$pull': { "comments": comment } })
-            await Comments.findByIdAndDelete(commentId)
-            res.status(204).send(`deleted`)
-        } else {
-            next(createError(404, `sorry your request cannot be found`))
-            
-        }
+        await Comments.findByIdAndDelete(commentId)
+        await Post.findOneAndUpdate({_id: commentId}, {$pull: { comments: commentId  }})
+        
+        comment           
+            ? res.status(204).send(`deleted`)
+            : next(createError(404, `sorry your request cannot be found`))
     } catch (error) {
         console.log(error)
         if (error.name === "validationError") {

@@ -11,7 +11,7 @@ router.route( "/:postId" )
         CommentHandler.add 
     );
 
-router.route( '/:postId/:commentId' )
+router.route( '/:commentId' )
     .get( CommentHandler.findById )
     .put( CommentHandler.update )
     .delete( CommentHandler.delete );
