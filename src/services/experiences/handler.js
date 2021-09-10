@@ -15,12 +15,12 @@ export const getAllExperienceByName = async ( req, res, next ) => {
 
         // const experiences = await experiencesID.map( async id => {
         //     console.log( "id: ", id );
-        //     const profile = await Experience.findById( id )
+        //     const profile = await Experience.findById( id );
 
         //     console.log( "profile: ", profile );
 
-        //     return profile 
-        // } );
+        //     return profile;
+        // } )
 
         // console.log( "experiences: ", experiences );
 
@@ -47,16 +47,16 @@ export const addExperience = async ( req, res, next ) => {
     console.log( "req.params.body::: ", req.body );
     try
     {
-        // req.body.image = req.file.path;
+        req.body.image = req.file.path;
         const newExperience = await new Experience( req.body ).save();
         console.log( "newExperience::: ", newExperience );
         const profile = await Profile.findOne( { username: req.params.userName } );
-        console.log( profile);
+        console.log( profile );
         const updatedExperience = await Profile.findOneAndUpdate(
             { username: req.params.userName },
-            { $push: { experiences: {...newExperience} } },
+            { $push: { experiences: { ...newExperience } } },
             { new: true }
-        )
+        );
 
         updatedExperience
             ? res.status( 201 ).send( newExperience )
@@ -72,7 +72,7 @@ export const findById = async ( req, res, next ) => {
     try
     {
         const experience = await Experience.findById( req.params.expId );
-        
+
         experience
             ? res.send( experience )
             : next( createError( 404, `Experience with id "${ req.params.expId }" not found` ) );
@@ -98,11 +98,29 @@ export const updateExperience = async ( req, res, next ) => {
     }
 };
 
+export const uploadPicture = async ( req, res, next ) => {
+    try
+    {
+        console.log( "req.params: ", req.params );
+        console.log( "req.body: ", req.body );
+        req.body.image = req.file.path;
+        const updatedExperience = await Experience.findByIdAndUpdate( req.params.expId, req.body, { new: true, returning: true } );
+        console.log( "updatedExperience: ", updatedExperience );
+        res.status( 204 ).send( updatedExperience );
+    }
+    catch ( error )
+    {
+        next( createError( 500, error.message ) );
+    }
+};
+
+
 
 export const deleteExperience = async ( req, res, next ) => {
     try
     {
         await Experience.findByIdAndDelete( req.params.expId );
+        await Profile.findOneAndUpdate( { username: req.params.userName }, { $pull: { experiences: req.params.expId } } );
         res.status( 204 ).send();
     }
     catch ( error )
@@ -116,6 +134,7 @@ const experiencesHandler = {
     add: addExperience,
     findById: findById,
     update: updateExperience,
+    uploadPicture: uploadPicture,
     delete: deleteExperience
 };
 

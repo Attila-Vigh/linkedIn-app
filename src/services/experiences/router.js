@@ -22,6 +22,11 @@ router.route( '/:userName/experiences/:expId' )
     .delete( experiencesHandler.delete );
 
 router.route( '/:userName/experiences/:expId/picture' )
+    .post( 
+        uploadImage( "linkedjobs/experiences-images" ).single( "image" ), 
+        experiencesHandler.uploadPicture );
+
+
 router.route( '/:userName/experiences/CSV' )
 
 // router.route( "/image" )
